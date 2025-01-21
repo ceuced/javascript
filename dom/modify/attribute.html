@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" defer>
+        const attribute = document.getElementById("attribute");
+        const type = attribute.getAttribute("type"); // Get attribute
+        // console.log("Value of attribute type: " + type);
+        // attribute.setAttribute("type", "number"); // Modify attribute
+        attribute.removeAttribute("name"); // Remove attribute
+    </script>
+</head>
+
+<body>
+    <input id="attribute" type="text" name="toremove" />
+</body>
+
+</html>

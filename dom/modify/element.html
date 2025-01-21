@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" defer>
+        const newElement = document.createElement("p");
+        const parentElement = document.getElementById("container");
+        const p = document.querySelector("p");
+        newElement.textContent = "This is a new paragraph.";
+        parentElement.appendChild(newElement); // Append Element
+        // parentElement.insertBefore(newElement, p); // Insert Before
+        newElement.remove(); // Remove Element
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolore distinctio voluptatem pariatur ab, dicta similique omnis aperiam, temporibus rerum est. Nesciunt delectus laboriosam perferendis similique, doloribus quos tenetur quasi.</p>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" defer>
+        const element = document.getElementById("myElement");
+
+        // // Direct style manipulation
+        // element.style.fontSize = "24px";
+        // element.style.fontFamily = "Arial";
+        // // Add a class
+        // element.classList.add("highlight");
+        // // Remove a class
+        // element.classList.remove("highlight");
+        // Toggle a class
+        element.classList.toggle("active");
+        // Check if a class exists
+        console.log(element.classList.contains("active")); // true or false
+    </script>
+
+    <style>
+        .active {
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="myElement" onclick="this.classList.toggle('active')">Lorem ipsum dolor sit, amet consectetur adipisicing
+        elit. Eligendi ab tempora fugit error. Optio, ullam! Unde vel consectetur odio minus provident laudantium velit.
+        Quis voluptatum odio rem aliquid vel sint.</div>
+</body>
+
+</html>

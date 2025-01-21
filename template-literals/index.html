@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" defer>
+        // utlity function to output to the page (not part of discussion)
+        import output from '../output.js';
+        const [out, clear] = output('output');
+
+        const name = "Alice";
+        const age = 25;
+
+        const traditional = "I'm " + name + " and I'm " + age + " yrs old.";
+        const tempplateLiterals = `I'm ${name} and I'm ${age} yrs old.`;
+        
+        out(traditional);
+        out(tempplateLiterals);
+
+    </script>
+</head>
+
+<body>
+    <div id="output"></div>
+</body>
+
+</html>

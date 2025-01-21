@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" defer>
+        // utlity function to output to the page (not part of discussion)
+        import output from '../output.js';
+        const [out, clear] = output('output');
+
+        // import statements
+        import { add, subtract } from './math.js'; // named imports
+        import exp from './math.js'; // default import
+        import { add as sum } from './math.js'; // renaming imports
+        import * as m from './math.js'; // import all
+        
+        out(add(10, 2));
+        out(exp(10, 2));
+        out(sum(10, 2));
+        out(m.multiply(10, 2));
+    </script>
+</head>
+
+<body>
+    <div id="output"></div>
+</body>
+
+</html>

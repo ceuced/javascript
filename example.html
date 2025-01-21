@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" defer>
+        const dropDown = document.getElementById('dropDown'); // Select by ID
+        function handleChange() {
+            const { value: selected } = dropDown; // Get the value using destructuring
+            const myElement = document.querySelector('#myElement'); // Use of Query Selector
+            const styles = [
+                {color: null, fontSize: null},
+                {color: 'blue', fontSize: '32px'},
+                {color: 'green', fontSize: '24px'},
+                {color: 'red', fontSize: '16px'},
+            ];
+            const {color, fontSize} = styles[selected];
+            myElement.style.color = color;
+            myElement.style.fontSize = fontSize;
+        }
+        dropDown.addEventListener('change', handleChange); // Add Event Listener
+    </script>
+</head>
+
+<body>
+    <select id="dropDown">
+        <option value="0">None</option>
+        <option value="1">Blue 32</option>
+        <option value="2">Green 24</option>
+        <option value="3">Red 16</option>
+    </select>
+    <div id="myElement">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex deserunt modi praesentium tenetur,
+        accusantium architecto aliquid recusandae enim quod voluptates ipsa odit corporis dolore. Porro ex eos assumenda
+        mollitia perspiciatis?</div>
+</body>
+
+</html>

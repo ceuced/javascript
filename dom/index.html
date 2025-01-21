@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" defer>
+        document.getElementById('chapter2').style.backgroundColor = 'red'; // Select by ID
+        document.getElementsByClassName('chapters')[2].style.backgroundColor = 'blue';  // Select by class (returns array)
+        document.getElementsByTagName('div')[3].style.backgroundColor = 'orange'; // Select by tag name (returns array)
+        document.querySelector('.chapters').style.backgroundColor = 'yellow'; // Select using query (returns first match)
+        document.querySelectorAll('.chapters')[4].style.backgroundColor = 'green'; // Select using query (returns all matches as array)
+
+        // for(let chapter of document.querySelectorAll('.chapters')){
+        //     chapter.style.fontSize = '50px';
+        // }
+    </script>
+</head>
+<body>
+    <div id="chapter1" class="chapters">Chapter 1</div>
+    <div id="chapter2" class="chapters">Chapter 2</div>
+    <div id="chapter3" class="chapters">Chapter 3</div>
+    <div id="chapter4" class="chapters">Chapter 4</div>
+    <div id="chapter5" class="chapters">Chapter 5</div>
+</body>
+</html>

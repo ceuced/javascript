@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" defer>
+        // Utility function to output to the DOM (not part of discussion)
+        import output from '../output.js';
+        const [out, clear] = output('output');
+
+        // Destructuring
+        const count = [1, 2, 3, 4, 5];
+        let [one, two, ...rest] = count; // descructuring w/ rest
+        let [, , three, ...remaining] = count; // descructuring w/ skip
+        out(one);
+        out(rest);
+        out(three);
+        out(remaining);
+
+        const person = {
+            name: 'John',
+            age: 30,
+            email: 'john@example.com'
+        };
+        let { name, email } = person; // Destructuring objects
+        let { age: edad} = person; // Renaming desctructured object property/method
+        out(email);
+        out(edad);
+    </script>
+</head>
+
+<body>
+    <div id="output"></div>
+</body>
+
+</html>
