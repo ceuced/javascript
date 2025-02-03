@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .selected {
+            background-color: #DDD;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        // Key for Autoincrement
+        let id = 1; 
+        // Default value if form has been reset.
+        const prodDefault = { product: '', price: 0, instock: true,  type: 'Fruit' }; 
+        // Dummy Data
+        const initialProducts = new Map([
+            [id++, { product: 'Apple', price: 20, instock: true,  type: 'Fruit' }],
+            [id++, { product: 'Banana', price: 25, instock: false,  type: 'Fruit' }],
+            [id++, { product: 'Carrot', price: 30, instock: true,  type: 'Vegetable' }],
+            [id++, { product: 'Cheese', price: 50, instock: true,  type: 'Dairy' }]
+        ]);
+
+        function MyApp() {
+            // Used to track the current product being edited.
+            const [currentId, setCurrentId] = React.useState();
+            // Used to store and update the information of product being edited.
+            const [currentProduct, setCurrentProduct] = React.useState(prodDefault);
+            // Used to store and update the list of products.
+            const [products, setProducts] = React.useState(initialProducts);
+
+            const handleEdit = (id) => {
+                const product = products.get(id);
+                setCurrentId(id);
+                setCurrentProduct(product);
+            }
+
+            const handleDelete = (id) => {
+                const newMap = new Map(products);
+                newMap.delete(id);
+                setProducts(newMap);
+            }
+
+            const handleChange = (event) => {
+                const { name, value } = event.target;
+                if (event.target.type === 'checkbox') {
+                    setCurrentProduct({ ...currentProduct, [name]: event.target.checked });
+                    return;
+                }
+                setCurrentProduct({ ...currentProduct, [name]: value });
+            }
+
+            const handleSubmit = (event) => {
+                event.preventDefault();
+                const newMap = new Map(products);
+                if (currentId) {
+                    newMap.set(currentId, {...currentProduct});
+                } else {
+                    newMap.set(id++, {...currentProduct});
+                }
+                setProducts(newMap);
+                setCurrentId();
+                setCurrentProduct(prodDefault);
+            }
+
+            const handleCancel = (event) => {
+                event.preventDefault();
+                setCurrentId();
+                setCurrentProduct(prodDefault);
+            }
+
+            return <>
+                <h1>Product List</h1>
+                <Form />
+                <Table products={products} />
+            </>;
+        }
+
+        function Form() {
+            return <form>
+                <label>
+                    <span>Product</span>
+                    <input name="product" type="text" />
+                </label>
+                <label>
+                    <span>Price</span>
+                    <input name="price" type="number"/>
+                </label>
+                <label>
+                    <span>In-Stock</span>
+                    <input name="instock" type="checkbox" />
+                </label>
+                <label>
+                    <span>Type</span>
+                    <select name="type">
+                        <option value="Fruit">Fruit</option>
+                        <option value="Vegetable">Vegetable</option>
+                        <option value="Dairy">Dairy</option>
+                    </select>
+                </label>
+                <button>Submit</button>
+                <button type="button">Cancel</button>
+            </form>
+        }
+
+        function Table({products}) {
+            return <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>In-Stock</th>
+                        <th>Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {products.entries().map(([id, product]) => <tr key={id}>
+                        <td>{id}</td>
+                        <td>{product.product}</td>
+                        <td>{product.price}</td>
+                        <td>{product.instock ? 'Yes' : 'No'}</td>
+                        <td>{product.type}</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>).toArray()}
+                </tbody>
+            </table>
+        }
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<MyApp />);
+    </script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this page for starting a new React project with JSX:
+      https://react.dev/learn/start-a-new-react-project
+
+      Read this page for adding React with JSX to an existing project:
+      https://react.dev/learn/add-react-to-an-existing-project
+    -->
+</body>
+
+</html>
