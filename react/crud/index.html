@@ -33,42 +33,59 @@
 
         function MyApp() {
             // Used to track the current product being edited.
-            const [currentId, setCurrentId] = React.useState();
-            // Used to store and update the information of product being edited.
+            const [currentId, setCurrentId] = React.useState(); // Assign using destructuring [readOnlyState, setterFunction]
+            // Used to store and update the information of product in the form.
             const [currentProduct, setCurrentProduct] = React.useState(prodDefault);
             // Used to store and update the list of products.
             const [products, setProducts] = React.useState(initialProducts);
 
+            // Used to reset the form.
             const handleEdit = (id) => {
                 const product = products.get(id);
                 setCurrentId(id);
                 setCurrentProduct(product);
             }
 
+            // Used to delete product.
             const handleDelete = (id) => {
+                /* The products state is read only, so we need to create a new Map and use
+                 * its content to initialize the map. The newMap variable is used to delete
+                 * product from the map. Now that the product has been deleted, we need to
+                 * use the setter function setProducts too update products.
+                 */
                 const newMap = new Map(products);
                 newMap.delete(id);
                 setProducts(newMap);
             }
 
+            // Used to update the product information.
             const handleChange = (event) => {
                 const { name, value } = event.target;
+                /* If the change event was triggered by a check box, we need to access the "checked"
+                 * property of the event target instead of the "value" property.
+                 */
                 if (event.target.type === 'checkbox') {
+                    /* [name]: value is called computed property name. The property to be updated
+                     * will be based on the value of name variable. For example, if the value of the
+                     * name variable is "instock", the property to be updated will be "instock". This
+                     * is equivalent to the following code:
+                     * setCurrentProduct({ ...currentProduct, instock: event.target.checked });
+                     */
                     setCurrentProduct({ ...currentProduct, [name]: event.target.checked });
-                    return;
+                    return; // This is to prevent the code below from running. Calling return will exit the function.
                 }
                 setCurrentProduct({ ...currentProduct, [name]: value });
             }
 
             const handleSubmit = (event) => {
                 event.preventDefault();
-                const newMap = new Map(products);
-                if (currentId) {
-                    newMap.set(currentId, {...currentProduct});
-                } else {
-                    newMap.set(id++, {...currentProduct});
+                const newMap = new Map(products); // Same as delete, products is read only, so we need to create a new Map.
+                if (currentId) { // If currentId is not undefined, it means that we are editing an existing product.
+                    newMap.set(currentId, {...currentProduct}); // We use the copy "newMap" to update the product.
+                } else { // Else, we are adding a new product.
+                    newMap.set(id++, {...currentProduct}); // Increment ID to make sure the next product will have a unique ID.
                 }
-                setProducts(newMap);
+                setProducts(newMap); // We use the setter function setProducts to update products.
                 setCurrentId();
                 setCurrentProduct(prodDefault);
             }
@@ -88,6 +105,13 @@
             </>;
         }
 
+        /**
+         * The Form component is used to display the form to add or edit a product.
+         * The product prop is used to display the product information in the form.
+         * The onChange is the function calle when onChange event is triggered.
+         * The onSubmit is the function called when the form is submitted.
+         * The onCancel is the function called when the cancel button is clicked.
+         */
         function Form({ product, onChange, onSubmit, onCancel }) {
             return <form onSubmit={onSubmit}>
                 <label>
@@ -115,6 +139,13 @@
             </form>
         }
 
+        /**
+         * The Table component is used to display the list of products in a table.
+         * The currentId prop is used to identify the current row being edited.
+         * The products prop is used to access the list of products.
+         * The onEdit is the function called when the edit button is clicked.
+         * The onDelete is the function called when the delete button is clicked.
+         */
         function Table({currentId, products, onEdit, onDelete }) {
             return <table>
                 <thead>
@@ -147,16 +178,6 @@
         const root = ReactDOM.createRoot(container);
         root.render(<MyApp />);
     </script>
-    <!--
-      Note: this page is a great way to try React but it's not suitable for production.
-      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
-
-      Read this page for starting a new React project with JSX:
-      https://react.dev/learn/start-a-new-react-project
-
-      Read this page for adding React with JSX to an existing project:
-      https://react.dev/learn/add-react-to-an-existing-project
-    -->
 </body>
 
 </html>
