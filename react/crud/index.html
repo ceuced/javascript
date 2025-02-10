@@ -22,13 +22,13 @@
         // Key for Autoincrement
         let id = 1; 
         // Default value if form has been reset.
-        const prodDefault = { product: '', price: 0, instock: true,  type: 'Fruit' }; 
+        const prodDefault = { product: '', price: 0, instock: true,  type: 'Fruit', expiration: '2025-02-10' }; 
         // Dummy Data
         const initialProducts = new Map([
-            [id++, { product: 'Apple', price: 20, instock: true,  type: 'Fruit' }],
-            [id++, { product: 'Banana', price: 25, instock: false,  type: 'Fruit' }],
-            [id++, { product: 'Carrot', price: 30, instock: true,  type: 'Vegetable' }],
-            [id++, { product: 'Cheese', price: 50, instock: true,  type: 'Dairy' }]
+            [id++, { product: 'Apple', price: 20, instock: true,  type: 'Fruit', expiration: '2024-12-14' }],
+            [id++, { product: 'Banana', price: 25, instock: false,  type: 'Fruit', expiration: '2025-05-12' }],
+            [id++, { product: 'Carrot', price: 30, instock: true,  type: 'Vegetable', expiration: '2025-12-25' }],
+            [id++, { product: 'Cheese', price: 50, instock: true,  type: 'Dairy', expiration: '2025-02-27' }]
         ]);
 
         function MyApp() {
@@ -134,6 +134,10 @@
                         <option value="Dairy">Dairy</option>
                     </select>
                 </label>
+                <label>
+                    <span>Expiration</span>
+                    <input name="expiration" type="date" value={product.expiration} onChange={onChange} />
+                </label>
                 <button>Submit</button>
                 <button type="button" onClick={onCancel}>Cancel</button>
             </form>
@@ -155,6 +159,7 @@
                         <th>Price</th>
                         <th>In-Stock</th>
                         <th>Type</th>
+                        <th>Expiration</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -165,6 +170,7 @@
                         <td>{product.price}</td>
                         <td>{product.instock ? 'Yes' : 'No'}</td>
                         <td>{product.type}</td>
+                        <td>{product.expiration.toString()}</td>
                         <td>
                             <button onClick={() => onEdit(id)}>Edit</button>
                             <button onClick={() => onDelete(id)}>Delete</button>
