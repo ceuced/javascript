@@ -15,10 +15,14 @@
     <div id="root"></div>
     <script type="text/babel">
         function MyApp() {
+            const names = ['Alice', 'Bob', 'Charlie'];
+            const handleClick = (name) => {
+                alert(`Hello ${name}!`);
+            };
             const [liked, setLiked] = React.useState(0);
             return <>
                 <Title title="Hello World!" liked={liked} />
-                <List />
+                <List names={names} onClick={handleClick} />
                 <LikeButton onClick={() => setLiked(liked + 1)}/>
             </>;
         }
@@ -31,16 +35,12 @@
             return <button onClick={onClick}>Like</button>;
         }
 
-        function List() {
-            const names = ['Alice', 'Bob', 'Charlie'];
-            let list = [];
-            for (let i = 0; i < names.length; i++) {
-                list.push();
-            }
-            
+        function List({ names, onClick}) {
             return (
                 <ul>
-                    {names.map(name => <li>{name}</li>)}
+                    {names.map(name => <li onClick={() => onClick(name)}>
+                        {name}
+                    </li>)}
                 </ul>
             );
         }        
