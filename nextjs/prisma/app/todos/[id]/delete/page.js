@@ -1,13 +1,17 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]";
 import prisma from "@/lib/prisma";
 import { Button } from "flowbite-react";
+import { getServerSession } from "next-auth";
 import Form from 'next/form';
 import Link from "next/link";
-import { redirect, notFound } from "next/navigation";
+import { redirect, notFound, forbidden } from "next/navigation";
 
 export default async function DeleteTodo({ params }) {
     const id = parseInt((await params).id);
     const currentTodo = await prisma.todo.findFirst({ where: { id: id }});
     if (!currentTodo) return notFound();
+    const session = await getServerSession(authOptions);
+    if (currentTodo.userId !== session.user.id) return forbidden("You are not allowed to view this todo.");
     const deleteTodo = async () => {
         "use server";
         await prisma.todo.delete({

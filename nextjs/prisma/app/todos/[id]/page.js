@@ -1,7 +1,9 @@
 import prisma from "@/lib/prisma";
 import { Button, Card } from "flowbite-react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, forbidden } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]";
 
 export default async function TodoView({ params }) {
   const id = (await params).id;
@@ -9,6 +11,8 @@ export default async function TodoView({ params }) {
     where: { id: parseInt(id) },
   });
   if (!todo) return notFound();
+  const session = await getServerSession(authOptions);
+  if (todo.userId !== session.user.id) return forbidden("You are not allowed to view this todo.");
   return (
     <Card>
       <h5 className="font-bold">{todo.task}</h5>

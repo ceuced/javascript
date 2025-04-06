@@ -1,11 +1,16 @@
 import prisma from "@/lib/prisma";
 import { Table,  TableHead, TableHeadCell, TableBody, TableRow, TableCell, Button } from "flowbite-react";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]";
 
 export default async function Todos() {
+    const session = await getServerSession(authOptions);
     const todos = await prisma.todo.findMany({ include: { 
-        user: true 
-    }});
+            user: true 
+        },
+        where: { userId: session.user.id },
+    });
     const tableRows = todos.map((todo) => <TableRow key={todo.id}>
         <TableCell><Link href={`/todos/${todo.id}`} className="text-blue-500">{todo.id}</Link></TableCell>
         <TableCell>{todo.task}</TableCell>
